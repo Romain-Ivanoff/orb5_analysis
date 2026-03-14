@@ -200,7 +200,21 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+# ORB5 / simulation output
+*.h5
+*.dat
+*.log
+*.nc
 
+# large run folders
+runs/
+output/
+data/
+
+# plots
+*.png
+*.pdf
+*.jpg
 # Marimo
 marimo/_static/
 marimo/_lsp/
