@@ -219,3 +219,24 @@ data/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# simulation output
+*.h5
+*.dat
+*.out
+*.log
+*.nc
+
+# large folders
+simulations/
+output/
+runs/
+
+# plots (optional)
+*.png
+*.pdf
