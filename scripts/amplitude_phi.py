@@ -102,28 +102,24 @@ def ampltude_phi_legend(path, legend,i_s):#Extract the growth evolution of the s
     formatter1.set_powerlimits((-3, 3))
     
     return phi_t, max_pol_av_s, max_pol_130
-"""
-def ITG_peak_finder(path,i_time=-1):
-    #Function to find the peak of the ITG by takinfg the average in poloidal plane 
-    #By default it is suited for linear simulations, as it uses last time moment, but i_time can be used any
-    phi_sc, phi_t,phi_s,phi_theta = phi_extraction(path)
-    '''
-    aver_phi=np.zeros((len(phi_t),len(phi_s)))
-    for i_t in range (len(phi_t)):
-        for i_s in range (len(phi_s)):
-            aver_phi[i_t,i_s]=sum(phi_sc[i_t,:,i_s])
-    i_s_max=(np.where(aver_phi[i_time]==max(aver_phi[i_time])))[0][0]
-    '''
-    phi_at_t=phi_sc[i_time]
-    phi_at_t_theta0=phi_at_t[0]
-    phi_av=np.zeros(len(phi_s))
-    for i_s in range (len(phi_s)):
-        phi_av[i_s]=sum(abs(phi_at_t[:,i_s]))
 
-    i_s_max=(np.where(phi_av==max(phi_av)))[0][0]
-    #print(len(phi_s))
-    return i_s_max
-"""
+def amplitude_phi_max(path,legend):
+    phi_sc, phi_t,phi_s,phi_theta=phi_extraction(path)
+    phi_max=np.zeros(len(phi_t))
+    for i_t in range(len(phi_t)):
+        phi_max[i_t]=np.max(phi_sc[i_t])
+
+    semilogy(phi_t,phi_max,label=legend)
+    xlabel(r'$t\cdot\Omega_{ci}$', fontsize=18)
+    ylabel(r'$log\phi$', fontsize=18)
+    rc('xtick', labelsize=16)
+    rc('ytick', labelsize=16)
+    
+    formatter1 = ScalarFormatter(useMathText=True)
+    formatter1.set_powerlimits((-3, 3))
+
+    return phi_t,phi_max
+
 def phi_space_plot(path, i_t=-1):
     phi_sc, phi_t,phi_s,phi_theta=phi_extraction(path)
     fig,ax=subplots(figsize=(10,5))
@@ -137,6 +133,3 @@ def phi_space_plot(path, i_t=-1):
     print('Mode i_s=',i_s_max,'s=',s_max)
     return 1
 
-#adhoc_path='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/noEP/toroidal_scans/lx540/n30/orb5_res.h5'
-
-#phi_space_plot(adhoc_path)

@@ -11,7 +11,6 @@ from matplotlib.ticker import ScalarFormatter
 from matplotlib.ticker import MaxNLocator
 import os
 import re
-
 import sys
 sys.path.append('/media/test-Samsung-SSD/roma/Work/orb5_analysis/scripts/')
 from temp_convertion import temperature_fin
@@ -35,7 +34,6 @@ def phi_extraction(path):
     struct.close()
     return phi_sc, phi_t,phi_s,phi_theta
 
-
 def fit_slope_logA(t, phi, tmin=None, tmax=None):
     """
     Fit log(A_t) = gamma * t + intercept.
@@ -53,43 +51,6 @@ def fit_slope_logA(t, phi, tmin=None, tmax=None):
 
     slope, intercept, r_value, p_value, std_err = linregress(tt, yy)
     return slope, std_err, intercept, r_value**2
-
-def gamma_box_slopes(path,i_s=140, tmin=None, tmax=None, n_boxes=4, min_pts_per_box=8,nsel_max_itg=False, nsel_max_all_space=False):
-    phi_sc, phi_t,phi_s,phi_theta=phi_extraction(path)
-    phi_max_pol_s=np.zeros(len(phi_t))
-    phi_max=np.zeros(len(phi_t))
-    if nsel_max_itg==True:
-        i_s=ITG_peak_finder(path,tmin, tmax)
-    for i_t in range(len(phi_t)):
-        phi_max_pol_s[i_t]=np.max(phi_sc[i_t,:,i_s])
-        phi_max[i_t]=np.max(phi_sc[i_t])
-    #######
-    #print(ITG_peak_finder(path,tmin, tmax, 0, 130)) 
-    #######
-    mask = (phi_t >= tmin) & (phi_t <= tmax)
-    tt = phi_t[mask]
-    y = np.log(phi_max_pol_s[mask])
-    N = len(tt)
-    if nsel_max_all_space==True:
-        y = np.log(phi_max[mask])
-    # adjust number of boxes if data too short
-    if N < n_boxes * min_pts_per_box:
-        n_boxes = max(1, N // min_pts_per_box)
-    if n_boxes == 0:
-        raise ValueError("Not enough points for segmentation")
-
-    edges = np.linspace(0, N, n_boxes+1, dtype=int)
-    slopes, stderrs = [], []
-
-    for i in range(n_boxes):
-        i0, i1 = edges[i], edges[i+1]
-        if i1 - i0 < 3:
-            continue
-        slope, err, _, _ = fit_slope_logA(tt[i0:i1], np.exp(y[i0:i1]))
-        slopes.append(slope)
-        stderrs.append(err)
-
-    return np.array(slopes), np.array(stderrs)
 
 def process_temperature_folders(base_path, target_temps=None):
     """
@@ -161,61 +122,86 @@ def process_toroidal_n_folders(base_path, target_ns=None):
     
     return results
 
-def gamma_temp_scan(base_path,i_s=140, nsel_max_itg=False, tmin=None, tmax=None, n_boxes=4, min_pts_per_box=8, nl_slowingdown=False, nsel_box_err=True, nsel_max_all_space=False):
+def gamma_box_slopes(path,i_s=0, tmin=None, tmax=None, nsel_itg_loc='max_all_space', n_boxes=4, min_pts_per_box=8):
+    phi_sc, phi_t,phi_s,phi_theta=phi_extraction(path)
+    phi_max_pol_s=np.zeros(len(phi_t))
+    phi_max=np.zeros(len(phi_t))
+    if nsel_itg_loc == 'max_s':
+        i_s=ITG_peak_finder(path,tmin, tmax)
+    for i_t in range(len(phi_t)):
+        phi_max_pol_s[i_t]=np.max(phi_sc[i_t,:,i_s])
+        phi_max[i_t]=np.max(phi_sc[i_t])
+    #######
+    #print(ITG_peak_finder(path,tmin, tmax, 0, 130)) 
+    #######
+    mask = (phi_t >= tmin) & (phi_t <= tmax)
+    tt = phi_t[mask]
+    y = np.log(phi_max_pol_s[mask])
+    N = len(tt)
+    if nsel_itg_loc == 'max_all_space':
+        y = np.log(phi_max[mask])
+    # adjust number of boxes if data too short
+    if N < n_boxes * min_pts_per_box:
+        n_boxes = max(1, N // min_pts_per_box)
+    if n_boxes == 0:
+        raise ValueError("Not enough points for segmentation")
+        
+    edges = np.linspace(0, N, n_boxes+1, dtype=int)
+    slopes, stderrs = [], []
+    
+
+    for i in range(n_boxes):
+        i0, i1 = edges[i], edges[i+1]
+        if i1 - i0 < 3:
+            continue
+        slope, err, _, _ = fit_slope_logA(tt[i0:i1], np.exp(y[i0:i1]))
+        slopes.append(slope)
+        stderrs.append(err)
+    slopes, stderrs=np.array(slopes), np.array(stderrs)
+    gamma,error=slopes.mean(),slopes.std()
+    if n_boxes == 1:
+        error=stderrs
+    return gamma,error/sqrt(n_boxes)
+
+def gamma_temp_scan(base_path,i_s=0, tmin=None, tmax=None, nsel_itg_loc='max_all_space', n_boxes=4, min_pts_per_box=8, nl_slowingdown=False):
     arr=process_temperature_folders(base_path)
     gamma_scan=np.zeros(len(arr))
     err_scan=np.zeros(len(arr))
     TH=np.zeros(len(arr))
     it=0
     for temps in arr:
-        if nsel_max_itg==True:
-            i_s=ITG_peak_finder(arr[temps]+'/orb5_res.h5',tmin, tmax)
-            #print(i_s)
-        slopes, stderrs = gamma_box_slopes(arr[temps]+'/orb5_res.h5',i_s, tmin, tmax, n_boxes, min_pts_per_box, nsel_max_all_space)
-        gamma_scan[it],err_scan[it]=slopes.mean(),slopes.std()
-        if nsel_box_err==False:
-            slopes, stderrs = gamma_box_slopes(arr[temps]+'/orb5_res.h5',i_s, tmin, tmax, 1, min_pts_per_box, nsel_max_all_space)
-            err_scan[it]=slopes.std()
+        gamma_scan[it],err_scan[it] = gamma_box_slopes(path=arr[temps]+'/orb5_res.h5',i_s=i_s, tmin=tmin, tmax=tmax, nsel_itg_loc=nsel_itg_loc, n_boxes=n_boxes, min_pts_per_box=min_pts_per_box)
         TH[it]=temps
-        #print(TH[it])
         it+=1
+    
+    ########________________######
+    #Following section is dedicated to the recalculation of a SD tmperature.
+    #For the moment the case with E_birth=5 parameter was taken for the adhoc Alexey-2022 case 
+    #One needs to CORRECT this function in order to use it for different cases
+    ########________________######
+
     if nl_slowingdown == True:
         E_birth=5
         for i in range(len(TH)):
-            TH[i]=temperature_fin(1,TH[i]*E_birth) ###TO CORRECT
-            #print(TH[i])
-        
-    return TH, gamma_scan, err_scan/sqrt(n_boxes)
+            TH[i]=temperature_fin(1,TH[i]*E_birth) 
+            
+    return TH, gamma_scan, err_scan
 
-def gamma_toroidal_scan(base_path,i_s=140, nsel_max_itg=False, tmin=None, tmax=None, n_boxes=4,min_pts_per_box=8,nl_slowingdown=False, nsel_box_err=True, nsel_max_all_space=False):
+def gamma_toroidal_scan(base_path,i_s=0, tmin=None, tmax=None, nsel_itg_loc='max_all_space',  n_boxes=4, min_pts_per_box=8):
     arr=process_toroidal_n_folders(base_path)
     gamma_scan=np.zeros(len(arr))
     err_scan=np.zeros(len(arr))
     n_arr=np.zeros(len(arr))
     it=0
     for ns in arr:
-        if nsel_max_itg==True:
-            i_s=ITG_peak_finder(arr[ns]+'/orb5_res.h5',tmin, tmax)
-            #print(i_s)
-        slopes, stderrs = gamma_box_slopes(arr[ns]+'/orb5_res.h5',i_s, tmin, tmax, n_boxes, min_pts_per_box, nsel_max_itg, nsel_max_all_space)
-        gamma_scan[it],err_scan[it]=slopes.mean(),slopes.std()
-        if nsel_box_err==False:
-            slopes, stderrs = gamma_box_slopes(arr[ns]+'/orb5_res.h5',i_s, tmin, tmax, 1, min_pts_per_box, nsel_max_itg, nsel_max_all_space)
-            err_scan[it]=slopes.std()
+        gamma_scan[it],err_scan[it] = gamma_box_slopes(path=arr[ns]+'/orb5_res.h5',i_s=i_s, tmin=tmin, tmax=tmax, nsel_itg_loc=nsel_itg_loc, n_boxes=n_boxes, min_pts_per_box=min_pts_per_box)
         n_arr[it]=ns
         it+=1
-    if nl_slowingdown == True:
-        E_birth=5
-        for i in range(len(n_arr)):
-            n_arr[i]=temperature_fin(1,n_arr[i]*E_birth) ###TO CORRECT
     
         
-    return n_arr, gamma_scan, err_scan/sqrt(n_boxes)
+    return n_arr, gamma_scan, err_scan
 
-
-
-
-def gamma_profile(path, tmin=None, tmax=None,n_boxes=4, min_pts_per_box=8,nsel_box_err=True,n_samples=64):   # <- number of phi_s points you want
+def gamma_profile(path, tmin=None, tmax=None,n_boxes=4, min_pts_per_box=8,n_samples=64):   # <- number of phi_s points you want
     phi_sc, phi_t, phi_s, phi_theta = phi_extraction(path)
     # choose evenly spaced indices across phi_s
     if n_samples is None or n_samples >= len(phi_s):

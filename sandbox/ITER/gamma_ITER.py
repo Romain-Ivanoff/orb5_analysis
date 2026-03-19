@@ -22,61 +22,63 @@ path_ES_noEP_kinele='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/IT
 path_EM_noEP='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/dt10_4species/orb5_res.h5'
 path_EM_EP='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/maxwellian-EP/T_prof/EM/nH01_dt20/orb5_res.h5'
 path_SD_test_1='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/slowingdown-EP/test/ES_dt30_nH01/orb5_res.h5'
-tmin=40000
+
+tmin=30000
 tmax=200000
 tmin_EM=40000
 tmax_EM=100000
 i_s_ITG1=100
 i_s_ITG2=46
 i_s_TEM=297
- 
+nsel_itg_loc='s'
 #noEP:
-slopes, stderrs = gamma_box_slopes(path_ES_noEP_adele,i_s_ITG1, tmin, tmax)
-gamma_ITG_ES_adele_noEP,err_ITG_ES_adele_noEP=slopes.mean(),slopes.std()
+slopes, stderrs = gamma_box_slopes(path_ES_noEP_adele,i_s_ITG1, tmin, tmax,nsel_itg_loc)
+gamma_ITG_ES_adele_noEP,err_ITG_ES_adele_noEP=slopes, stderrs
+'''
+slopes, stderrs = gamma_box_slopes(path_ES_noEP_adele,i_s_ITG2, tmin, tmax,nsel_itg_loc)
+gamma_weakITG_ES_adele_noEP,err_weakITG_ES_adele_noEP=slopes, stderrs
+'''
+slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_ITG1, tmin, tmax,nsel_itg_loc,n_boxes=1)
+gamma_ITG_ES_kinele_noEP,err_ITG_ES_kinele_noEP=slopes, stderrs
 
-slopes, stderrs = gamma_box_slopes(path_ES_noEP_adele,i_s_ITG2, tmin, tmax)
-gamma_weakITG_ES_adele_noEP,err_weakITG_ES_adele_noEP=slopes.mean(),slopes.std()
+'''
+slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_ITG2, tmin, tmax,nsel_itg_loc)
+gamma_weakITG_ES_kinele_noEP,err_weakITG_ES_kinele_noEP=slopes, stderrs
 
-slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_ITG1, tmin, tmax)
-gamma_ITG_ES_kinele_noEP,err_ITG_ES_kinele_noEP=slopes.mean(),slopes.std()
-
-slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_ITG2, tmin, tmax)
-gamma_weakITG_ES_kinele_noEP,err_weakITG_ES_kinele_noEP=slopes.mean(),slopes.std()
-
-slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_TEM, tmin, tmax)
-gamma_TEM_ES_noEP,err_TEM_ES_noEP=slopes.mean(),slopes.std()
-
-slopes, stderrs = gamma_box_slopes(path_EM_noEP,i_s_ITG1, tmin, tmax)
-gamma_ITG_EM_noEP,err_ITG_EM_noEP=slopes.mean(),slopes.std()
-
-slopes, stderrs = gamma_box_slopes(path_EM_noEP,i_s_ITG2, tmin, tmax)
-gamma_weakITG_EM_noEP,err_weakITG_EM_noEP=slopes.mean(),slopes.std()
-
+slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_TEM, tmin, tmax,nsel_itg_loc)
+gamma_TEM_ES_noEP,err_TEM_ES_noEP=slopes, stderrs
+'''
+slopes, stderrs = gamma_box_slopes(path_EM_noEP,i_s_ITG1, tmin, tmax,nsel_itg_loc)
+gamma_ITG_EM_noEP,err_ITG_EM_noEP=slopes, stderrs
+'''
+slopes, stderrs = gamma_box_slopes(path_EM_noEP,i_s_ITG2, tmin, tmax,nsel_itg_loc)
+gamma_weakITG_EM_noEP,err_weakITG_EM_noEP=slopes, stderrs
+'''
 #EP:
 
-slopes, stderrs = gamma_box_slopes(path_ES_EP_adele,i_s_ITG1, tmin, tmax)
-gamma_ITG_ES_adele_EP,err_ITG_ES_adele_EP=slopes.mean(),slopes.std()
+slopes, stderrs = gamma_box_slopes(path_ES_EP_adele,i_s_ITG1, tmin, tmax,nsel_itg_loc)
+gamma_ITG_ES_adele_EP,err_ITG_ES_adele_EP=slopes, stderrs
+'''
+slopes, stderrs = gamma_box_slopes(path_ES_EP_adele,i_s_ITG2, tmin, tmax,nsel_itg_loc)
+gamma_weakITG_ES_adele_EP,err_weakITG_ES_adele_EP=slopes, stderrs
+'''
+slopes, stderrs = gamma_box_slopes(path_EM_EP,i_s_ITG1, tmin_EM, tmax_EM,nsel_itg_loc)
+gamma_ITG_EM_EP,err_ITG_EM_EP=slopes, stderrs
+'''
+slopes, stderrs = gamma_box_slopes(path_EM_EP,i_s_ITG2, tmin_EM, tmax_EM,nsel_itg_loc)
+gamma_weakITG_EM_EP,err_weakITG_EM_EP=slopes, stderrs
 
-slopes, stderrs = gamma_box_slopes(path_ES_EP_adele,i_s_ITG2, tmin, tmax)
-gamma_weakITG_ES_adele_EP,err_weakITG_ES_adele_EP=slopes.mean(),slopes.std()
+slopes, stderrs = gamma_box_slopes(path_EM_noEP,i_s_TEM, 60000, 110000,nsel_itg_loc)
+gamma_TEM_EM_noEP,err_TEM_EM_noEP=slopes, stderrs
 
-slopes, stderrs = gamma_box_slopes(path_EM_EP,i_s_ITG1, tmin_EM, tmax_EM)
-gamma_ITG_EM_EP,err_ITG_EM_EP=slopes.mean(),slopes.std()
-
-slopes, stderrs = gamma_box_slopes(path_EM_EP,i_s_ITG2, tmin_EM, tmax_EM)
-gamma_weakITG_EM_EP,err_weakITG_EM_EP=slopes.mean(),slopes.std()
-
-slopes, stderrs = gamma_box_slopes(path_EM_noEP,i_s_TEM, 60000, 110000)
-gamma_TEM_EM_noEP,err_TEM_EM_noEP=slopes.mean(),slopes.std()
-
-slopes, stderrs = gamma_box_slopes(path_EM_EP,i_s_TEM, 60000, 110000)
-gamma_TEM_EM_EP,err_TEM_EM_EP=slopes.mean(),slopes.std()
-
+slopes, stderrs = gamma_box_slopes(path_EM_EP,i_s_TEM, 60000, 110000,nsel_itg_loc)
+gamma_TEM_EM_EP,err_TEM_EM_EP=slopes, stderrs
+'''
 #SD EPs, test____________________________________
-slopes, stderrs = gamma_box_slopes(path_SD_test_1,i_s_ITG1, 165000, 200000)
-gamma_ITG_ES_EP_SD1,err_ITG_ES_EP_SD1=slopes.mean(),slopes.std()
+slopes, stderrs = gamma_box_slopes(path_SD_test_1,i_s_ITG1, 165000, 200000,nsel_itg_loc)
+gamma_ITG_ES_EP_SD1,err_ITG_ES_EP_SD1=slopes, stderrs
 
-
+ 
 #MAIN ITG BRANCH____________________________________________________________
 fig,ax=subplots(figsize=(7,6))
 formatter = ScalarFormatter(useMathText=True)
@@ -84,13 +86,13 @@ formatter.set_powerlimits((-3, 3))
 ax.yaxis.set_major_formatter(formatter)
 ax.errorbar(0,gamma_ITG_ES_adele_noEP,err_ITG_ES_adele_noEP, marker='o',capsize=5, label=r'$n_f=0\%$ ES')
 #ax.errorbar(0,gamma_weakITG_ES_adele_noEP,err_weakITG_ES_adele_noEP, marker='o',capsize=5, label=r'$n_f=0\%$ ES adiabatic, 2nd ITG')
-#########ax.errorbar(0,gamma_ITG_ES_kinele_noEP,err_ITG_ES_kinele_noEP, marker='o',mfc ='w',capsize=5, label=r'$n_f=0\%$ ES kinetic')
 #ax.errorbar(0,gamma_weakITG_ES_kinele_noEP,err_weakITG_ES_kinele_noEP, marker='o',mfc ='w',capsize=5, label=r'$n_f=0\%$ ES kinetic, 2nd ITG')
 
 #ax.errorbar(0,gamma_TEM_ES_noEP,err_TEM_ES_noEP, marker='x',capsize=5, label=r'$n_f=0\%$ ES kinetic, TEM')
 
 ax.errorbar(0,gamma_ITG_EM_noEP,err_ITG_EM_noEP, marker='o',mfc ='w',capsize=5, label=r'$n_f=0\%$, EM')
 #ax.errorbar(0,gamma_weakITG_EM_noEP,err_weakITG_EM_noEP, marker='s',mfc ='w',capsize=5, label=r'$n_f=0$ EM, 2nd ITG')
+ax.errorbar(0,gamma_ITG_ES_kinele_noEP,err_ITG_ES_kinele_noEP, marker='o',mfc ='w',capsize=5, label=r'$n_f=0\%$ ES kinetic')
 
 
 
@@ -100,8 +102,8 @@ ax.errorbar(1,gamma_ITG_ES_adele_EP,err_ITG_ES_adele_EP, marker='s',capsize=5, l
 ax.errorbar(1,gamma_ITG_EM_EP,err_ITG_EM_EP, marker='s',mfc ='w',capsize=5, label=r'$n_f=1\%$ Maxwellian, EM')
 ax.errorbar(1,gamma_ITG_ES_EP_SD1,err_ITG_ES_EP_SD1, marker='s',capsize=5, label=r'$n_f=1\%$ slowingdown, ES')
 
-print((gamma_ITG_ES_adele_noEP-gamma_ITG_ES_adele_EP)/gamma_ITG_ES_adele_noEP)
-print((gamma_ITG_EM_noEP-gamma_ITG_EM_EP)/gamma_ITG_EM_noEP)
+#print((gamma_ITG_ES_adele_noEP-gamma_ITG_ES_adele_EP)/gamma_ITG_ES_adele_noEP)
+#print((gamma_ITG_EM_noEP-gamma_ITG_EM_EP)/gamma_ITG_EM_noEP)
 ax.axhline(y=gamma_ITG_ES_adele_noEP, xmin=0, xmax=1, ls='--')
 ax.axhline(y=gamma_ITG_EM_noEP, xmin=0, xmax=1, ls='--', color='orange')
 ax.grid()
@@ -111,7 +113,7 @@ ax.set_ylabel(r"$\gamma/\Omega_{ci}$", fontsize=18)
 rc('xtick', labelsize=16)
 rc('ytick', labelsize=16)
 tight_layout()
-#savefig('/media/test-Samsung-SSD/roma/Work/orb5_analysis/Pictures/linear_ITG/ITER/slowingdown/growthrate/ITER_gamma_ITG_all.pdf')
+#savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/ITER/slowingdown/growthrate/ITER_gamma_ITG_kin.pdf')
 
 '''
 #WEAK ITG___________________________________________________________________

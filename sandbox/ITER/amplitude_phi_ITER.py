@@ -31,9 +31,26 @@ ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/IT
 #ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/ES_kinetic/dt10_4species_m400/orb5_res.h5',r'$ES, kinetic,\, m_i/m_e=400, n_f=0$, $dt=10$',i_s=100)
 #ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/ES_kinetic/dt20_4species/orb5_res.h5',r'$ES, kinetic, n_f=0$, TEM',i_s=297)
 #ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/ES_kinetic/dt20_4species/orb5_res.h5',r'$ES, kinetic, n_f=0$, 2nd ITG',i_s=46)
+path_ES_EP_adele='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/maxwellian-EP/T_prof/ES/nH01_dt20/orb5_res.h5'
+path_ES_noEP_adele='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/ES_adiabatic/dt20_4species/orb5_res.h5'
+path_ES_noEP_kinele='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/ES_kinetic/dt20_4species/orb5_res.h5'
 
-ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/dt10_4species/orb5_res.h5',r'$EM, n_f=0, dt10$',i_s=100)
-ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/dt20_4species/orb5_res.h5',r'$EM, n_f=0, dt20$',i_s=100)
+path_EM_noEP='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/dt10_4species/orb5_res.h5'
+path_EM_EP='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/maxwellian-EP/T_prof/EM/nH01_dt20/orb5_res.h5'
+path_SD_test_1='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/slowingdown-EP/test/ES_dt30_nH01/orb5_res.h5'
+i_s_ITG1=100
+i_s_ITG2=46
+i_s_TEM=297
+ampltude_phi_legend(path_EM_noEP, 'EM, noEP',i_s_ITG1)
+ampltude_phi_legend(path_EM_EP, 'EM, EP',i_s_ITG1)
+ampltude_phi_legend(path_ES_noEP_kinele, 'ES kin, noEP',i_s_ITG1)
+ampltude_phi_legend(path_ES_EP_adele, 'ES, EP',i_s_ITG1)
+ampltude_phi_legend(path_ES_noEP_adele, 'ES, noEP',i_s_ITG1)
+ampltude_phi_legend(path_SD_test_1, 'ES, SD',i_s_ITG1)
+
+
+#ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/dt10_4species/orb5_res.h5',r'$EM, n_f=0, dt10$',i_s=100)
+#ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/dt20_4species/orb5_res.h5',r'$EM, n_f=0, dt20$',i_s=100)
 
 #ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/Old_compiler/dt10_4species_short/orb5_res.h5',r'$EM, n_f=0, dt10$',i_s=100)
 #ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/ITER/no-EP/EM_kinetic/dt10_4species/orb5_res.h5',r'$EM, n_f=0$, dt10 test',i_s=100) 
