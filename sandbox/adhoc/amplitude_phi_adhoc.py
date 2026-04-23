@@ -17,9 +17,16 @@ from amplitude_phi import *
 #compilers comparison
 
 figure(figsize=(7, 6))
+path_unst='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/temperature_scan/pitagora/unstable_eta/lin-n20-nH10-TH10/orb5_res.h5'
+
+amplitude_phi_max(path_unst,'unst')
+
+'''
 ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/ES/adiabatic_electrons/const_beta_scan/pitagora/old_compiler/lin-n20-nH10-TH00/orb5_res.h5','old',i_s=120)
 ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/ES/adiabatic_electrons/temperature_scan/pitagora/lin-n20-nH10-TH10/orb5_res.h5','new',i_s=120)
 ampltude_phi_legend('/media/test-Samsung-SSD/roma/Work/simulations/test/lin-n20-nH10-TH10/orb5_res.h5','test',i_s=120)
+'''
+
 grid()
 legend(fontsize=14)
 #xlim(-0.5, 10)

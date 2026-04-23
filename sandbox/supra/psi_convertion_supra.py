@@ -35,7 +35,7 @@ r_norm, s, psi, Te, ne=profiles_extraction(path_shaped)
 #r_norm_circ, s_circ, psi_circ, Te_circ, ne_circ=profiles_extraction(path_circ)
 
 def plot_prodiles():
-
+    
     fig,ax=subplots(figsize=(7,6))
     formatter = ScalarFormatter(useMathText=True)
     formatter.set_powerlimits((-3, 3))

@@ -29,6 +29,23 @@ path_kin_n110_dt5_n7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/s
 path_kin_n110_dt10_n7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/simplified_equil/noEP/ES_kin/res_test/n110_dt10_ntot7/orb5_res.h5'
 path_kin_n110_dt5_n8='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/simplified_equil/noEP/ES_kin/res_test/n110_dt5_ntot8_high/orb5_res.h5'
 path_kin_n110_dt10_n7_high='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/simplified_equil/noEP/ES_kin/res_test/n110_dt10_ntot7_high/orb5_res.h5'
+
+n60_dt5_ntot6_s03_09='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_ES/convergence_test/n60_smin03_smax09_ntot6e6_ns512_dt5_full/orb5_res.h5'
+n60_dt5_ntot7_s03_09='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_ES/convergence_test/n60_smin03_smax09_ntot6e7_ns512_dt5_full/orb5_res.h5'
+n100_dt10_ntot7_s04_08='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_ES/convergence_test/n100_smin04_smax08_ntot6e7_ns512_dt10/orb5_res.h5'
+n100_dt10_ntot7_s03_09='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_ES/convergence_test/n100_smin03_smax09_ntot6e7_ns512_dt10/orb5_res.h5'
+n100_dt5_ntot7_s03_09='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_ES/convergence_test/n100_smin03_smax09_ntot6e7_ns1024_dt5/orb5_res.h5'
+
+m200_n60_dt5_ntot6='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_EM/convergence_test/m200/n60_smin03_smax09_ntot6e6_ns512_dt5/orb5_res.h5'
+m200_n60_dt5_ntot7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_EM/convergence_test/m200/n60_smin03_smax09_ntot6e7_ns512_dt5/orb5_res.h5'
+m200_n60_dt2_5_ntot7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_EM/convergence_test/m200/n60_smin03_smax09_ntot6e7_ns512_dt2_5/orb5_res.h5'
+m200_n60_dt1_ntot7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_EM/convergence_test/m200/n60_smin03_smax09_ntot6e7_ns512_dt1/orb5_res.h5'
+
+m400_n60_dt5_ntot7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_EM/convergence_test/m400/n60_smin03_smax09_ntot6e7_ns512_dt5/orb5_res.h5'
+m400_n60_dt2_5_ntot7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_EM/convergence_test/m400/n60_smin03_smax09_ntot6e7_ns512_dt2_5/orb5_res.h5'
+m400_n60_dt1_ntot7='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/2761_case/4_species_EM/convergence_test/m400/n60_smin03_smax09_ntot6e7_ns512_dt1/orb5_res.h5'
+
+
 '''
 amplitude_phi_max(path_n110_s_test,r's test')
 amplitude_phi_max(path_n110,r'$n=110$')
@@ -37,27 +54,46 @@ amplitude_phi_max(path_240,r'$n=240$')
 amplitude_phi_max(path_260,r'$n=260$')
 '''
 
-amplitude_phi_max(path_kin_n110_dt5_n7,r'$dt5_n7$')
+'''amplitude_phi_max(n60_dt5_ntot7_s03_09,r'$n60, dt5, ntot7, s03-09$')
+amplitude_phi_max(n60_dt5_ntot6_s03_09,r'$n60,dt5, ntot6, s03-09$')
+amplitude_phi_max(n100_dt10_ntot7_s04_08,r'$n100, dt10, ntot7, s04-08$')
+amplitude_phi_max(n100_dt10_ntot7_s03_09,r'$n100, dt10, ntot7, s03-09$')
+amplitude_phi_max(n100_dt5_ntot7_s03_09,r'$n100, dt5, ntot7, s03-09$')'''
+
+#ampltude_phi_legend
+#EM sims 2761 SUPRA__________________________
+amplitude_phi_max(m200_n60_dt5_ntot6,r'$m200, dt5 ntot6$')
+amplitude_phi_max(m200_n60_dt5_ntot7,r'$m200, dt5 ntot7$')
+amplitude_phi_max(m200_n60_dt2_5_ntot7,r'$m200, dt2.5 ntot7$')
+amplitude_phi_max(m200_n60_dt1_ntot7,r'$m200, dt1 ntot7$')
+
+amplitude_phi_max(m400_n60_dt5_ntot7,r'$m400, dt5 ntot7$')
+amplitude_phi_max(m400_n60_dt2_5_ntot7,r'$m400, dt2.5 ntot7$')
+amplitude_phi_max(m400_n60_dt1_ntot7,r'$m400, dt1 ntot7$')
+
+phi_space_plot(m400_n60_dt2_5_ntot7)
+
+'''amplitude_phi_max(path_kin_n110_dt5_n7,r'$dt5_n7$')
 amplitude_phi_max(path_kin_n110_dt10_n7,r'$dt10_n7$')
 amplitude_phi_max(path_kin_n110_dt10_n7_high,r'$dt10_n7_high$')
-amplitude_phi_max(path_kin_n110_dt5_n8,r'$dt5_n8$')
+amplitude_phi_max(path_kin_n110_dt5_n8,r'$dt5_n8$')'''
 
 grid()
 legend(fontsize=14)
-xlim(30000, 60000)
+#xlim(30000, 60000)
 #ylim(1.2e-8, 5.5e-8)
 
 ax = gca()
 tight_layout()
 
-gamma_dt5_n7=(gamma_box_slopes(path_kin_n110_dt5_n7,i_s=0, tmin=35000, tmax=60000, n_boxes=4, min_pts_per_box=8,nsel_itg_loc='max_all_space'))[0]
+'''gamma_dt5_n7=(gamma_box_slopes(path_kin_n110_dt5_n7,i_s=0, tmin=35000, tmax=60000, n_boxes=4, min_pts_per_box=8,nsel_itg_loc='max_all_space'))[0]
 gamma_dt10_n7=(gamma_box_slopes(path_kin_n110_dt10_n7,i_s=0, tmin=35000, tmax=60000, n_boxes=4, min_pts_per_box=8,nsel_itg_loc='max_all_space'))[0]
 gamma_dt10_n7_high=(gamma_box_slopes(path_kin_n110_dt10_n7_high,i_s=0, tmin=35000, tmax=60000, n_boxes=4, min_pts_per_box=8,nsel_itg_loc='max_all_space'))[0]
 gamma_dt5_n8=(gamma_box_slopes(path_kin_n110_dt5_n8,i_s=0, tmin=35000, tmax=60000, n_boxes=4, min_pts_per_box=8,nsel_itg_loc='max_all_space'))[0]
 
 print(min(gamma_dt5_n8,gamma_dt10_n7_high,gamma_dt10_n7,gamma_dt5_n7)/max(gamma_dt5_n8,gamma_dt10_n7_high,gamma_dt10_n7,gamma_dt5_n7))
 print(gamma_dt10_n7_high*10**5,gamma_dt10_n7*10**5,gamma_dt5_n7*10**5,gamma_dt5_n8*10**5)
-
+'''
 #phi_sc, phi_t,phi_s,phi_theta=phi_extraction(path)
 #plot_2D(path_dt10_ntot7, -1)
 #print(ITG_peak_finder(path_dt10_ntot6, tmin=10000, tmax=60000))

@@ -6,7 +6,8 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.colors import LogNorm
 from scipy.signal import find_peaks
 from matplotlib.ticker import ScalarFormatter
-
+import glob
+import os
 '''
 # Load two columns: column 0 and column 1
 rho, Te = np.loadtxt(
@@ -43,9 +44,9 @@ tight_layout()
 #savefig('/media/test-Samsung-SSD/roma/Work/orb5_analysis/Pictures/linear_ITG/adhoc_suprafusion/Te_fit.pdf')
 
 '''
-path_n100='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/shaped/n_scan/n100_dt10_ntot7/orb5_res.h5'
+path_n110='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/simplified_equil/noEP/ES_kin/res_test/n110_dt5_ntot7/orb5_res.h5'
 
-struct=File(path_n100,'r')
+struct=File(path_n110,'r')
 s_q=array(struct["equil/profiles/generic/sgrid_eq"])
 q=array(struct["equil/profiles/generic/q"])
 n_norm=array(struct["equil/scalars/electrons/nbar"])
@@ -67,3 +68,82 @@ rc('xtick', labelsize=16)
 rc('ytick', labelsize=16)
 tight_layout()
 #savefig('/media/test-Samsung-SSD/roma/Work/orb5_analysis/Pictures/linear_ITG/supra/q.pdf')
+
+"plots form .dat files resulted from CHEASE equilibrium"
+
+folder_path = '/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/inputs/equilibrium_2761_5000/' 
+
+
+
+# --- SET YOUR FOLDER PATH HERE ---
+folder_path = '/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/inputs/equilibrium_2761_5000/' 
+
+# Define styles to cycle through so overlapping lines are visible
+# Solid, dashed, dotted, dash-dot
+styles = ['-', '--', ':']
+widths = [3, 2.5, 2,1.5, 1.0] # Thicker lines in the back, thinner in front
+
+# Initialize the figures
+fig_t, ax_t = subplots(figsize=(7, 6))
+fig_d, ax_d = subplots(figsize=(7, 6))
+
+def format_axis(ax, title, ylabel):
+    formatter = ScalarFormatter(useMathText=True)
+    formatter.set_powerlimits((-2, 2))
+    ax.yaxis.set_major_formatter(formatter)
+    ax.set_title(title)
+    ax.set_xlabel('s', fontsize=16)
+    ax.set_ylabel(ylabel, fontsize=16)
+    ax.grid(True, linestyle='--', alpha=0.7)
+
+search_pattern = os.path.join(folder_path, "*_profiles.dat")
+files = sorted(glob.glob(search_pattern))
+
+if not files:
+    print(f"No files found in: {folder_path}")
+else:
+    for i, file in enumerate(files):
+        base_name = os.path.basename(file)
+        element = base_name.split('_')[0]
+        
+        # Cycle through styles and widths based on the index i
+        current_style = styles[i % len(styles)]
+        current_width = widths[i % len(widths)]
+        
+        try:
+            data = np.genfromtxt(file, skip_header=1, invalid_raise=False)
+            
+            if data.size == 0:
+                continue
+
+            s = data[:, 0]
+            temp = data[:, 1]
+            density = data[:, 2]
+            
+            if np.max(density) <= 0:
+                continue
+            
+            # Use linestyle and linewidth to differentiate overlaps
+            ax_t.plot(s, temp, label=f'{element}', 
+                      linestyle=current_style, linewidth=current_width)
+            
+            ax_d.plot(s, density, label=f'{element}', 
+                      linestyle=current_style, linewidth=current_width)
+            
+        except Exception as e:
+            print(f"Could not read {file}: {e}")
+
+    format_axis(ax_t, '', r'$T$, eV')
+    format_axis(ax_d, '', r'$n,m^{-3}$')
+    
+    ax_t.legend()
+    ax_d.legend()
+
+    fig_t.tight_layout()
+    fig_d.tight_layout()
+    #fig_t.savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/supra/noEP/eq_profiles/CHEASE_temp_profile.pdf')
+
+    
+    #fig_d.savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/supra/noEP/eq_profiles/CHEASE_density_profile.pdf')
+    
+    show()

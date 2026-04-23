@@ -8,7 +8,8 @@ from scipy.signal import find_peaks
 import re
 import sys
 sys.path.append('/media/test-Samsung-SSD/roma/Work/orb5_analysis/scripts/')
-from amplitude_phi import phi_extraction, ITG_peak_finder
+from amplitude_phi import phi_extraction
+from ITG_peakfinder import ITG_peak_finder
 from omega import omega
 from temp_convertion import temperature_fin
 from scipy.ndimage import zoom

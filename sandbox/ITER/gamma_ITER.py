@@ -38,7 +38,7 @@ gamma_ITG_ES_adele_noEP,err_ITG_ES_adele_noEP=slopes, stderrs
 slopes, stderrs = gamma_box_slopes(path_ES_noEP_adele,i_s_ITG2, tmin, tmax,nsel_itg_loc)
 gamma_weakITG_ES_adele_noEP,err_weakITG_ES_adele_noEP=slopes, stderrs
 '''
-slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_ITG1, tmin, tmax,nsel_itg_loc,n_boxes=1)
+slopes, stderrs = gamma_box_slopes(path_ES_noEP_kinele,i_s_ITG1, tmin, tmax,nsel_itg_loc,n_boxes=2)
 gamma_ITG_ES_kinele_noEP,err_ITG_ES_kinele_noEP=slopes, stderrs
 
 '''
@@ -75,7 +75,7 @@ slopes, stderrs = gamma_box_slopes(path_EM_EP,i_s_TEM, 60000, 110000,nsel_itg_lo
 gamma_TEM_EM_EP,err_TEM_EM_EP=slopes, stderrs
 '''
 #SD EPs, test____________________________________
-slopes, stderrs = gamma_box_slopes(path_SD_test_1,i_s_ITG1, 165000, 200000,nsel_itg_loc)
+slopes, stderrs = gamma_box_slopes(path_SD_test_1,i_s_ITG1, 165000, 200000,nsel_itg_loc, n_boxes=3, min_pts_per_box=3)
 gamma_ITG_ES_EP_SD1,err_ITG_ES_EP_SD1=slopes, stderrs
 
  
@@ -109,11 +109,13 @@ ax.axhline(y=gamma_ITG_EM_noEP, xmin=0, xmax=1, ls='--', color='orange')
 ax.grid()
 ax.legend(fontsize=16)
 ax.set_xlabel(r'$\tilde{n}_f, \%$', fontsize=18)
-ax.set_ylabel(r"$\gamma/\Omega_{ci}$", fontsize=18)
+ax.set_ylabel(r"$\gamma\cdot\Omega_{ci}^{-1}$", fontsize=18)
 rc('xtick', labelsize=16)
 rc('ytick', labelsize=16)
 tight_layout()
+#
 #savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/ITER/slowingdown/growthrate/ITER_gamma_ITG_kin.pdf')
+#savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/ITER/slowingdown/growthrate/ITER_gamma_ITG_kin.png', dpi=300, bbox_inches='tight')
 
 '''
 #WEAK ITG___________________________________________________________________

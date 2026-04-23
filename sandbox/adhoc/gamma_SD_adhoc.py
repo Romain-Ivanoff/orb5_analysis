@@ -18,20 +18,20 @@ from gamma import *
 
 
 
-base_path_TH='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/ES/adiabatic_electrons/temperature_scan/pitagora/'
+base_path_TH='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/temperature_scan/pitagora/'
 base_path_SD_iso='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/slowingdown/ES/adiabatic_electrons/temperature_scan/pitagora/isotropic/'
 base_path_SD_aniso='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/slowingdown/ES/adiabatic_electrons/temperature_scan/pitagora/anisotropic/'
-path_TH00='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/ES/adiabatic_electrons/const_beta_scan/pitagora/lin-n20-nH10-TH00/orb5_res.h5'
+path_TH00='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/const_beta_scan/pitagora/lin-n20-nH10-TH00/orb5_res.h5'
 #base_path_TH='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/ES/adiabatic_electrons/temperature_scan/leonardo/gamma-comparison-SD'
-base_path_TH='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/ES/adiabatic_electrons/temperature_scan/pitagora/'
+#base_path_TH='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/adhoc/maxwellian/ES/adiabatic_electrons/temperature_scan/pitagora/'
 tmin=10000
 tmax=30000
 #TH, gamma_scan, err_scan=gamma_temp_scan(base_path_TH,i_s=160,nsel_max_itg=True, tmin=10000, tmax=30000, min_pts_per_box=8)
-TH, gamma_scan, err_scan=gamma_temp_scan(base_path_TH,i_s=144,nsel_max_itg=False, tmin=tmin, tmax=tmax, min_pts_per_box=8)
-TH_SD_iso, gamma_scan_SD_iso, err_scan_SD_iso=gamma_temp_scan(base_path_SD_iso,i_s=144,nsel_max_itg=False, tmin=tmin, tmax=tmax, min_pts_per_box=8,nl_slowingdown=True)
-TH_SD_aniso, gamma_scan_SD_aniso, err_scan_SD_aniso=gamma_temp_scan(base_path_SD_aniso,i_s=144,nsel_max_itg=False, tmin=tmin, tmax=tmax, min_pts_per_box=8,nl_slowingdown=True)
+TH, gamma_scan, err_scan=gamma_temp_scan(base_path_TH,i_s=144,nsel_itg_loc='max_all_space', tmin=tmin, tmax=tmax, min_pts_per_box=8)
+TH_SD_iso, gamma_scan_SD_iso, err_scan_SD_iso=gamma_temp_scan(base_path_SD_iso,i_s=144,nsel_itg_loc='max_all_space', tmin=tmin, tmax=tmax, min_pts_per_box=8,nl_slowingdown=True)
+TH_SD_aniso, gamma_scan_SD_aniso, err_scan_SD_aniso=gamma_temp_scan(base_path_SD_aniso,i_s=144,nsel_itg_loc='max_all_space', tmin=tmin, tmax=tmax, min_pts_per_box=8,nl_slowingdown=True)
 144
-slopes, stderrs =gamma_box_slopes(path=path_TH00,i_s=140, tmin=tmin, tmax=tmax, n_boxes=4, min_pts_per_box=8,nsel_max_itg=True)
+slopes, stderrs =gamma_box_slopes(path=path_TH00,i_s=140, tmin=tmin, tmax=tmax, n_boxes=4, min_pts_per_box=8,nsel_itg_loc='max_all_space')
 TH00, gamma_0, err_0=0,slopes.mean(),slopes.std()
 
 '''

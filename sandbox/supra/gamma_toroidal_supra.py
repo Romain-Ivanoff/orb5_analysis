@@ -56,6 +56,7 @@ rc('xtick', labelsize=16)
 rc('ytick', labelsize=16)
 fig.tight_layout()
 #savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/supra/noEP/growthrate/gamma_toroidal_FLR.pdf')
+#savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/supra/noEP/growthrate/gamma_toroidal_FLR.png', dpi=300, bbox_inches='tight')
 
 
 

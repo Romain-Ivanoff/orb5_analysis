@@ -142,7 +142,7 @@ def gamma_box_slopes(path,i_s=0, tmin=None, tmax=None, nsel_itg_loc='max_all_spa
         y = np.log(phi_max[mask])
     # adjust number of boxes if data too short
     if N < n_boxes * min_pts_per_box:
-        n_boxes = max(1, N // min_pts_per_box)
+        n_boxes = max([1, N // min_pts_per_box])
     if n_boxes == 0:
         raise ValueError("Not enough points for segmentation")
         
@@ -160,7 +160,7 @@ def gamma_box_slopes(path,i_s=0, tmin=None, tmax=None, nsel_itg_loc='max_all_spa
     slopes, stderrs=np.array(slopes), np.array(stderrs)
     gamma,error=slopes.mean(),slopes.std()
     if n_boxes == 1:
-        error=stderrs
+        error=stderrs.std()
     return gamma,error/sqrt(n_boxes)
 
 def gamma_temp_scan(base_path,i_s=0, tmin=None, tmax=None, nsel_itg_loc='max_all_space', n_boxes=4, min_pts_per_box=8, nl_slowingdown=False):
@@ -168,11 +168,14 @@ def gamma_temp_scan(base_path,i_s=0, tmin=None, tmax=None, nsel_itg_loc='max_all
     gamma_scan=np.zeros(len(arr))
     err_scan=np.zeros(len(arr))
     TH=np.zeros(len(arr))
+    
     it=0
     for temps in arr:
+        
         gamma_scan[it],err_scan[it] = gamma_box_slopes(path=arr[temps]+'/orb5_res.h5',i_s=i_s, tmin=tmin, tmax=tmax, nsel_itg_loc=nsel_itg_loc, n_boxes=n_boxes, min_pts_per_box=min_pts_per_box)
         TH[it]=temps
         it+=1
+        
     
     ########________________######
     #Following section is dedicated to the recalculation of a SD tmperature.

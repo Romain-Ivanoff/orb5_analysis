@@ -12,41 +12,93 @@ sys.path.append('/media/test-Samsung-SSD/roma/ITG_from_Alexey/Scripts/')
 
 
 path='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/shaped/test/n100_dt10_ntot6/orb5_res.h5'
+path_ogyropsi='/media/test-Samsung-SSD/roma/Work/simulations/lin_ITG_EP/supra/inputs/equilibrium_2761_5000/ogyropsi.h5'
 
-struct=File(path,'r') 
+def plot_from_orbres():
 
-Bc=array(struct["/equil/sc/B_c"]) 	
-r_sc=array(struct["/equil/sc/r_c"])
-z_sc=array(struct["/equil/sc/z_c"])
-B_norm=array(struct["/equil/scalars/generic/b_norm"])
-L_norm=array(struct["/equil/scalars/generic/d_norm"])
-struct.close()
+    
+    struct=File(path,'r') 
+
+    Bc=array(struct["/equil/sc/B_c"]) 	
+    r_sc=array(struct["/equil/sc/r_c"])
+    z_sc=array(struct["/equil/sc/z_c"])
+    B_norm=array(struct["/equil/scalars/generic/b_norm"])
+    L_norm=array(struct["/equil/scalars/generic/d_norm"])
+    struct.close()
 
 
-r_sc =r_sc/L_norm 
-z_sc=z_sc/L_norm
+    r_sc =r_sc/L_norm 
+    z_sc=z_sc/L_norm
 
-figure(figsize=(7,6))
-plot(r_sc[:,-1], z_sc[:,-1], 'k', linewidth=1, label="Vessel boundary")
+    figure(figsize=(7,6))
+    plot(r_sc[:,-1], z_sc[:,-1], 'k', linewidth=1, label="Vessel boundary")
 
-for i in range (9):    
-    #print(i)
-    idx=(-i)*20
-    #print(idx)
-    plot(r_sc[:,idx], z_sc[:,idx], 'k', linewidth=0.5, label="Vessel boundary")
-plot(r_sc[:,-180], z_sc[:,-180], 'k', linewidth=1, label="Vessel boundary")
-#plot(r_sc[-45,:], z_sc[-45,:], 'k', linewidth=1, label="Vessel boundary")
+    for i in range (9):    
+        #print(i)
+        idx=(-i)*20
+        #print(idx)
+        plot(r_sc[:,idx], z_sc[:,idx], 'k', linewidth=0.5, label="Vessel boundary")
+    plot(r_sc[:,-180], z_sc[:,-180], 'k', linewidth=1, label="Vessel boundary")
+    #plot(r_sc[-45,:], z_sc[-45,:], 'k', linewidth=1, label="Vessel boundary")
 
-pcm = pcolormesh(r_sc, z_sc, Bc/B_norm, cmap="viridis", shading="auto", rasterized=True)
+    pcm = pcolormesh(r_sc, z_sc, Bc/B_norm, cmap="viridis", shading="auto", rasterized=True)
 
-#plot(r_sc[-1, :], z_sc[-1, :], 'k', linewidth=1.0)  # vessel outline
-cbar=colorbar(pcm, label=r"$B$")
-cbar.set_label(r"$B, T$", fontsize=16)
-xlabel("R, m", fontsize=18)
-ylabel("z, m", fontsize=18)
-axis("equal")
+    #plot(r_sc[-1, :], z_sc[-1, :], 'k', linewidth=1.0)  # vessel outline
+    cbar=colorbar(pcm, label=r"$B$")
+    cbar.set_label(r"$B, T$", fontsize=16)
+    xlabel("R, m", fontsize=18)
+    ylabel("z, m", fontsize=18)
+    axis("equal")
 
-rc('xtick', labelsize=16)
-rc('ytick', labelsize=16)
-tight_layout()
-#savefig('/media/test-Samsung-SSD/roma/Work/orb5_analysis/Pictures/linear_ITG/supra/B_space.pdf')
+    rc('xtick', labelsize=16)
+    rc('ytick', labelsize=16)
+    tight_layout()
+    #savefig('/media/test-Samsung-SSD/roma/Work/orb5_analysis/Pictures/linear_ITG/supra/B_space.pdf')
+    return
+
+
+def plot_from_ogyro():
+
+    
+    struct=File(path_ogyropsi,'r') 
+
+    Bc=array(struct["/data/var2d/B"]) 	
+    r_sc=array(struct["/data/var2d/R"])
+    z_sc=array(struct["/data/var2d/Z"])
+    B_norm=1
+    L_norm=1
+    struct.close()
+
+
+    r_sc =r_sc/L_norm 
+    z_sc=z_sc/L_norm
+
+    figure(figsize=(7,6))
+    plot(r_sc[:,-1], z_sc[:,-1], 'k', linewidth=1, label="Vessel boundary")
+
+    for i in range (10):    
+        #print(i)
+        idx=(-i)*10
+        #print(idx)
+        plot(r_sc[:,idx], z_sc[:,idx], 'k', linewidth=0.5, label="Vessel boundary")
+        #plot(r_sc[-idx,:], z_sc[-idx,:], 'k', linewidth=0.5, label="Vessel boundary")
+
+    plot(r_sc[:,-101], z_sc[:,-101], 'k', linewidth=1, label="Vessel boundary")
+   
+    pcm = pcolormesh(r_sc, z_sc, Bc/B_norm, cmap="viridis", shading="auto", rasterized=True)
+
+    #plot(r_sc[-1, :], z_sc[-1, :], 'k', linewidth=1.0)  # vessel outline
+    cbar=colorbar(pcm, label=r"$B$")
+    cbar.set_label(r"$B, T$", fontsize=16)
+    xlabel("R, m", fontsize=18)
+    ylabel("z, m", fontsize=18)
+    axis("equal")
+
+    rc('xtick', labelsize=16)
+    rc('ytick', labelsize=16)
+    tight_layout()
+    #savefig('/media/test-Samsung-SSD/roma/Work/Pictures/linear_ITG/supra/B_space.pdf')
+    show()
+    return
+
+plot_from_ogyro()
